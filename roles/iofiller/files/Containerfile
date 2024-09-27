@@ -1,0 +1,4 @@
+FROM registry.access.redhat.com/ubi9/ubi:latest
+COPY iofiller.sh /usr/local/bin/iofiller.sh
+RUN chmod +x /usr/local/bin/iofiller.sh
+CMD ["/usr/local/bin/iofiller.sh"]
