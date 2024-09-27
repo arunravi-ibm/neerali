@@ -14,18 +14,3 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 
-- name: Run Podman container
-  vars:
-    _cmd: "podman run un --rm --privileged --cpus=0.01 --memory=10M -v $dir:/data fioc:latest /usr/local/bin/runfio.sh TYPE=FILE MOUNT=/data TIME=150 &"
-    _log_file: "{{ neerali_teuthology_logdir }}/reimage_{{ _index }}.success"
-  ansible.builtin.shell:
-    cmd: |
-      set -euxo pipefail
-      {{ _cmd }} --owner {{ neerali_teuthology_reimage_owner }} {{ item }} | \
-        tee {{ neerali_teuthology_logdir }}/reimage_{{ _index }}.log
-      touch {{ _log_file }}
-    creates: "{{ _log_file }}"
-  loop: "{{ _neerali_teuthology_reimage_nodes }}"
-  loop_control:
-    label: "{{ item }}"
-    index_var: _inde
